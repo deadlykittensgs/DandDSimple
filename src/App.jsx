@@ -1,94 +1,142 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
+
 function App() {
-  const [name, setName] = useState("Test");
-  const [className, setClassName] = useState("Class: Bard");
-  const [level, setLevel] = useState("Level: 1");
-  const [race, setRace] = useState("Race");
-  const [background, setBackground] = useState("Background");
-  const [alignment, setAlignment] = useState("Alignment");
-  const [experiencePoints, setExperiencePoints] = useState("Experience Points");
 
-  const [strength, setStrength] = useState("Strength");
-  const [dexterity, setDexterity] = useState("Dexterity");
-  const [constitution, setConstitution] = useState("Constitution");
-  const [intelligence, setIntelligence] = useState("Intelligence");
-  const [wisdom, setWisdom] = useState("Wisdom");
-  const [charisma, setCharisma] = useState("Charisma");
 
-  const [strengthMod, setStrengthMod] = useState("Strength Modifier");
-  const [dexMod, setDexMod] = useState("Dexterity Modifier");
-  const [conMod, setConMod] = useState("Constitution Modifier");
-  const [intMod, setIntMod] = useState("Intelligence Modifier");
-  const [wisMod, setWisMod] = useState("Wisdom Modifier");
-  const [chaMod, setChaMod] = useState("Charisma Modifier");
+  // Date -----------------------------
 
-  const [profBonus, setProfBonus] = useState("Proficiency Bonus");
-  const [savingThrows, setSavingThrows] = useState("Saving Throws");
-  const [skills, setSkills] = useState("Skills");
-  const [armorClass, setArmorClass] = useState("Armor Class (AC)");
-  const [initiative, setInitiative] = useState("Initiative");
-  const [speed, setSpeed] = useState("Speed");
-  const [hitPointMax, setHitPointMax] = useState("Hit Point Maximum");
-  const [currentHP, setCurrentHP] = useState("Current Hit Points");
-  const [tempHP, setTempHP] = useState("Temporary Hit Points");
-  const [hitDice, setHitDice] = useState("Hit Dice");
-  const [deathSaves, setDeathSaves] = useState("Death Saves");
+const [showPopup, setShowPopup] = useState(false);
 
-  const [attacks, setAttacks] = useState("Attacks and Spellcasting");
-  const [weapon1, setWeapon1] = useState("Weapon 1");
-  const [weapon2, setWeapon2] = useState("Weapon 2");
-  const [weapon3, setWeapon3] = useState("Weapon 3");
+    // Load saved data once on component mount
+const [playerData, setPlayerData] = useState(() => {
+  const saved = localStorage.getItem('playerData');
+  return saved ? JSON.parse(saved) : {
+    name: 'Default',
+    lvl: 0,
+    roll: 0,
+    race: 'elf', 
+    classType: 'bard',
+    hp: 10,
+    hpLeft: 10,
+    speed: 30,
+    ac: 13,
+    strTotal: '+1',
+    dexTotal: '+1',
+    conTotal: '+1',
+    intTotal: '+1',
+    wisTotal: '+1',
+    chaTotal: '+1',
+    strTotalNumber: 10,
+    dexTotalNumber: 15,
+    conTotalNumber: 14,
+    intTotalNumber: 16,
+    wisTotalNumber: 12,
+    chaTotalNumber: 8,
+    gold: 50,
+    playerName: 'yourName',
+    background: 'folk Hero',
+    size: 'medium',
+    alignment: 'NG',
+    initiative: '+3',
+    deathSaves: 0,
+    actions: [
+      { id: 100, action: 'Swing Sword', description: 'Swing a sword for x dmg' },
+      { id: 200, action: 'Swing ax', description: 'Swing an ax for x dmg' },
+      { id: 300, action: 'Shoot Bow', description: 'Shoot bow for x dmg' },
+    ],
+    savingThrows: [0, 0, 0, 0, 0, 0],
+    SelectedSavingThrows: ['yes', 'no', 'no', 'no', 'no', 'no'],
+    skills: Array(18).fill(0),
+    selectedSkills: ['yes', ...Array(17).fill('no')],
+    toolProficiencie: ['tool 1', 'tool 2', 'tool 3'],
+    abilities: [
+      { id: 400, action: 'dark Vision', description: 'see in the dark 60 ft' },
+      { id: 500, action: 'trance', description: 'sleep shorter' },
+      { id: 600, action: 'Fay Ancestory', description: 'Resist charms' },
+    ],
+    inventory: ['thing 1', 'thing 2', 'thing 3'],
+    notes: ['note 1', 'note 2', 'note 3'],
+    languages: ['language 1', 'language 2', 'language 3'],
+  };
+});
 
-  const [spellClass, setSpellClass] = useState("Spellcasting Class");
-  const [spellAbility, setSpellAbility] = useState("Spellcasting Ability");
-  const [spellSaveDC, setSpellSaveDC] = useState("Spell Save DC");
-  const [spellAttackBonus, setSpellAttackBonus] = useState("Spell Attack Bonus");
-  const [cantrips, setCantrips] = useState("Cantrips");
-  const [lvl1, setLvl1] = useState("Level 1 Spells");
-  const [lvl2, setLvl2] = useState("Level 2 Spells");
-  const [lvl3, setLvl3] = useState("Level 3 Spells");
-  const [lvl4, setLvl4] = useState("Level 4 Spells");
-  const [lvl5, setLvl5] = useState("Level 5 Spells");
-  const [lvl6, setLvl6] = useState("Level 6 Spells");
-  const [lvl7, setLvl7] = useState("Level 7 Spells");
-  const [lvl8, setLvl8] = useState("Level 8 Spells");
-  const [lvl9, setLvl9] = useState("Level 9 Spells");
 
-  const [features, setFeatures] = useState("Features and Traits");
-  const [equipment, setEquipment] = useState("Equipment");
-  const [personalityTraits, setPersonalityTraits] = useState("Personality Traits");
-  const [ideals, setIdeals] = useState("Ideals");
-  const [bonds, setBonds] = useState("Bonds");
-  const [flaws, setFlaws] = useState("Flaws");
+// Functions -----------------------------------
 
-  const [languages, setLanguages] = useState("Languages");
-  const [toolsProf, setToolsProf] = useState("Tools Proficiencies");
-  const [armorProf, setArmorProf] = useState("Armor Proficiencies");
-  const [weaponProf, setWeaponProf] = useState("Weapon Proficiencies");
+// pop up to add details 
+    const togglePopup = () => {
+    setShowPopup(showPopup => !showPopup);
+  }
 
-  const [passiveWis, setPassiveWis] = useState("Passive Wisdom (Perception)");
-  const [otherProfs, setOtherProfs] = useState("Other Proficiencies and Languages");
-  const [appearance, setAppearance] = useState("Character Appearance");
-  const [allies, setAllies] = useState("Allies & Organizations");
-  const [backstory, setBackstory] = useState("Backstory");
-  const [treasure, setTreasure] = useState("Treasure");
+  // Save to localStorage whenever playerData changes
+  useEffect(() => {
+    localStorage.setItem('playerData', JSON.stringify(playerData));
+  }, [playerData]);
+
+
+  const closePopup = () => {
+  setShowPopup(false);
+};
+
 
   return (
+
     <div className="min-h-screen bg-slate-100 p-6">
-      <h1 className="text-3xl font-bold text-center mb-6 text-slate-800">D&D Character Sheet</h1>
+
+{/* Pop Up ------------------------------ */}
+  {showPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded shadow-lg w-[300px] text-center">
+            <h2 className="text-xl font-bold mb-4">Select value</h2>
+            <input value={playerData.name} onChange={(e) => setPlayerData(prev => ({ ...prev, name: e.target.value}))}  type="text" className='bg-slate-200 rounded p-1' />
+            
+
+            <button
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={togglePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+{/* Main Body ------------------------- */}
+      <header className='flex justify-evenly'> 
+        <button className='bg-slate-400 rounded w-[50px] h-[40px]'>Reset</button>
+         <h1 className="text-3xl font-bold text-center mb-6 text-slate-800">D&D Character Sheet</h1>
+         <button className='bg-slate-400 rounded w-[50px] h-[40px]'>Lock</button>
+      </header>
+     
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 text-slate-800 font-medium">
-        <div className="p-4 rounded bg-red-100"><p>Name</p>{name}</div>
-        <div className="p-4 rounded bg-orange-100"><p>Classname</p>{className}</div>
-        <div className="p-4 rounded bg-yellow-100"><p>level</p>{level}</div>
-        <div className="p-4 rounded bg-lime-100"><p>race</p>{race}</div>
-        <div className="p-4 rounded bg-green-100"><p>background</p>{background}</div>
-        <div className="p-4 rounded bg-teal-100"><p>alignment</p>{alignment}</div>
-        <div className="p-4 rounded bg-cyan-100"><p>experiencePoints</p>{experiencePoints}</div>
+       
+       
+        <div className=" flex p-4 rounded bg-red-100 justify-between">
+         <div className='w-[50%]'>
+          <p>Name</p>
+          <p>{playerData.name}</p>
+          </div> 
+          <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
+        </div>
 
-        <div className="p-4 rounded bg-sky-100"><p>strength</p>{strength}</div>
+        <div className="flex p-4 rounded justify-between bg-orange-100">
+          <div className='w-[50%]'>
+            <p>Classname</p>
+            <p>{playerData.classType}</p>
+          </div>
+          <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
+        </div>
+
+
+
+        <div className="p-4 rounded bg-yellow-100"><p>level</p>{playerData.classType}</div>
+        <div className="p-4 rounded bg-lime-100"><p>race</p>{playerData.classType}</div>
+        <div className="p-4 rounded bg-green-100"><p>background</p>{playerData.background}</div>
+        <div className="p-4 rounded bg-teal-100"><p>alignment</p>{playerData.alignment}</div>
+        <div className="p-4 rounded bg-cyan-100"><p>experiencePoints</p>{"empty"}</div>
+
+        {/* <div className="p-4 rounded bg-sky-100"><p>strength</p>{strength}</div>
         <div className="p-4 rounded bg-blue-100"><p>dexterity</p>{dexterity}</div>
         <div className="p-4 rounded bg-indigo-100"><p>constitution</p>{constitution}</div>
         <div className="p-4 rounded bg-violet-100"><p>intelligence</p>{intelligence}</div>
@@ -151,9 +199,12 @@ function App() {
         <div className="p-4 rounded bg-green-500"><p>appearance</p>{appearance}</div>
         <div className="p-4 rounded bg-teal-500"><p>allies</p>{allies}</div>
         <div className="p-4 rounded bg-cyan-500"><p>backstory</p>{backstory}</div>
-        <div className="p-4 rounded bg-sky-500"><p>treasure</p>{treasure}</div>
+        <div className="p-4 rounded bg-sky-500"><p>treasure</p>{treasure}</div> */}
       </div>
     </div>
+
+
+
   );
 }
 
