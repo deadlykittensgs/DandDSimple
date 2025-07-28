@@ -8,6 +8,8 @@ function App() {
   // Date -----------------------------
 
 const [showPopup, setShowPopup] = useState(false);
+const [currentlyEditing, setCurrentlyEditing] = useState(null);
+
 
     // Load saved data once on component mount
 const [playerData, setPlayerData] = useState(() => {
@@ -66,9 +68,11 @@ const [playerData, setPlayerData] = useState(() => {
 // Functions -----------------------------------
 
 // pop up to add details 
-    const togglePopup = () => {
-    setShowPopup(showPopup => !showPopup);
-  }
+const togglePopup = (field = null) => {
+  setCurrentlyEditing(field);
+  setShowPopup(prev => !prev);
+};
+
 
   // Save to localStorage whenever playerData changes
   useEffect(() => {
@@ -90,8 +94,16 @@ const [playerData, setPlayerData] = useState(() => {
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded shadow-lg w-[300px] text-center">
             <h2 className="text-xl font-bold mb-4">Select value</h2>
-            <input value={playerData.name} onChange={(e) => setPlayerData(prev => ({ ...prev, name: e.target.value}))}  type="text" className='bg-slate-200 rounded p-1' />
-            
+            {/* <input value={playerData.name} onChange={(e) => setPlayerData(prev => ({ ...prev, name: e.target.value}))}  type="text" className='bg-slate-200 rounded p-1' /> */}
+           <input
+  value={playerData[currentlyEditing] || ''}
+  onChange={(e) =>
+    setPlayerData((prev) => ({ ...prev, [currentlyEditing]: e.target.value }))
+  }
+  type="text"
+  className="bg-slate-200 rounded p-1"
+/>
+ 
 
             <button
               className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={togglePopup}>
@@ -117,7 +129,9 @@ const [playerData, setPlayerData] = useState(() => {
           <p>Name</p>
           <p>{playerData.name}</p>
           </div> 
-          <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
+          {/* <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button> */}
+          <button onClick={() => togglePopup('name')} className='bg-slate-100 p-1 '>change</button>
+
         </div>
 
         <div className="flex p-4 rounded justify-between bg-orange-100">
@@ -125,7 +139,9 @@ const [playerData, setPlayerData] = useState(() => {
             <p>Classname</p>
             <p>{playerData.classType}</p>
           </div>
-          <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
+          {/* <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button> */}
+
+<button onClick={() => togglePopup('classType')} className='bg-slate-100 p-1 '>change</button>
         </div>
 
 

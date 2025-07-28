@@ -1,6 +1,5 @@
 The goal of this project is this in these steps 
 
-
 Make a prefilled d and d page
 
 add a dice roller 
@@ -20,13 +19,13 @@ once that is done give the option for multiple saved charicters
 
 
 
- <div className=" flex p-4 rounded justify-between bg-red-100">
-         <div className='w-[50%]'>
+<div className=" flex p-4 rounded justify-between bg-red-100">
+    <div className='w-[50%]'>
           <p>Name</p>
           <p>{playerData.name}</p>
-          </div> 
-          <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
-        </div>
+    </div> 
+        <button onClick={togglePopup} className='bg-slate-100 p-1 '>change</button>
+</div>
 
         <div className="flex p-4 rounded justify-between bg-orange-100">
           <div className='w-[50%]'>
