@@ -146,11 +146,46 @@ const togglePopup = (field = null) => {
 
 
 
-        <div className="p-4 rounded bg-yellow-100"><p>level</p>{playerData.classType}</div>
-        <div className="p-4 rounded bg-lime-100"><p>race</p>{playerData.classType}</div>
-        <div className="p-4 rounded bg-green-100"><p>background</p>{playerData.background}</div>
-        <div className="p-4 rounded bg-teal-100"><p>alignment</p>{playerData.alignment}</div>
-        <div className="p-4 rounded bg-cyan-100"><p>experiencePoints</p>{"empty"}</div>
+<div className="flex p-4 rounded justify-between bg-yellow-100">
+  <div className="w-[50%]">
+    <p>Level</p>
+    <p>{playerData.lvl}</p>
+  </div>
+  <button onClick={() => togglePopup('lvl')} className="bg-slate-100 p-1">change</button>
+</div>
+
+<div className="flex p-4 rounded justify-between bg-lime-100">
+  <div className="w-[50%]">
+    <p>Race</p>
+    <p>{playerData.race}</p>
+  </div>
+  <button onClick={() => togglePopup('race')} className="bg-slate-100 p-1">change</button>
+</div>
+
+<div className="flex p-4 rounded justify-between bg-green-100">
+  <div className="w-[50%]">
+    <p>Background</p>
+    <p>{playerData.background}</p>
+  </div>
+  <button onClick={() => togglePopup('background')} className="bg-slate-100 p-1">change</button>
+</div>
+
+<div className="flex p-4 rounded justify-between bg-teal-100">
+  <div className="w-[50%]">
+    <p>Alignment</p>
+    <p>{playerData.alignment}</p>
+  </div>
+  <button onClick={() => togglePopup('alignment')} className="bg-slate-100 p-1">change</button>
+</div>
+
+<div className="flex p-4 rounded justify-between bg-cyan-100">
+  <div className="w-[50%]">
+    <p>Experience Points</p>
+    <p>{playerData.size}</p>
+  </div>
+  <button onClick={() => togglePopup('size')} className="bg-slate-100 p-1">change</button>
+</div>
+
 
         {/* <div className="p-4 rounded bg-sky-100"><p>strength</p>{strength}</div>
         <div className="p-4 rounded bg-blue-100"><p>dexterity</p>{dexterity}</div>
