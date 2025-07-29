@@ -9,7 +9,7 @@ function App() {
 
 const [showPopup, setShowPopup] = useState(false);
 const [currentlyEditing, setCurrentlyEditing] = useState(null);
-
+const [rolled, setRolled] = useState(null);
 
     // Load saved data once on component mount
 const [playerData, setPlayerData] = useState(() => {
@@ -70,7 +70,7 @@ const [playerData, setPlayerData] = useState(() => {
 const roll_dice = (dicemax) => {
   let total = 0
   const randomInt = Math.floor(Math.random() * dicemax) +1;
-
+  setRolled(randomInt)
   console.log(randomInt)
   return total
   
@@ -124,9 +124,12 @@ const togglePopup = (field = null) => {
 
 {/* Main Body ------------------------- */}
       <header className='flex justify-evenly'> 
-        <button className='bg-slate-400 rounded w-[50px] h-[40px]'>Reset</button>
+        <button onClick={ () => roll_dice(20)} className='bg-slate-400 rounded w-[50px] h-[40px]'>Roll 20</button>
          <h1 className="text-3xl font-bold text-center mb-6 text-slate-800">D&D Character Sheet</h1>
          <button className='bg-slate-400 rounded w-[50px] h-[40px]'>Lock</button>
+         <div>
+          <p>{rolled}</p>
+         </div>
       </header>
      
 
@@ -193,6 +196,14 @@ const togglePopup = (field = null) => {
     <p>{playerData.size}</p>
   </div>
   <button onClick={() => togglePopup('size')} className="bg-slate-100 p-1">change</button>
+</div>
+
+<div className="flex p-4 rounded justify-between bg-cyan-100">
+  <div className="w-[50%]">
+    <p>Notes</p>
+    <p>{playerData.notes[0]}</p>
+  </div>
+  <button onClick={() => togglePopup()} className="bg-slate-100 p-1">change</button>
 </div>
 
 

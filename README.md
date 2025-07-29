@@ -17,3 +17,6 @@ once that is done make login an option and have it save one charecter
 once that is done give the option for multiple saved charicters 
 
 Imploment a function go open the pop up. i want this funcrition to be able to add a discription to the pop up of what you are changing.  also get ready to make a DB to store your data
+
+
+Use the notes format do display notes and abbilities and such 
