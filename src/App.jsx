@@ -67,6 +67,15 @@ const [playerData, setPlayerData] = useState(() => {
 
 // Functions -----------------------------------
 
+const roll_dice = (dicemax) => {
+  let total = 0
+  const randomInt = Math.floor(Math.random() * dicemax) +1;
+
+  console.log(randomInt)
+  return total
+  
+}
+
 // pop up to add details 
 const togglePopup = (field = null) => {
   setCurrentlyEditing(field);
