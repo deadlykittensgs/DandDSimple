@@ -20,3 +20,7 @@ Imploment a function go open the pop up. i want this funcrition to be able to ad
 
 
 Use the notes format do display notes and abbilities and such 
+
+
+Here is my old app format 
+

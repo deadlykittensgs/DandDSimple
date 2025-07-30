@@ -8,8 +8,10 @@ function App() {
   // Date -----------------------------
 
 const [showPopup, setShowPopup] = useState(false);
+const [showPopupScroll, setShowPopupScroll] = useState(false);
 const [currentlyEditing, setCurrentlyEditing] = useState(null);
 const [rolled, setRolled] = useState(null);
+const options = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Warlock','Wizard','Blood Hunter' ];
 
     // Load saved data once on component mount
 const [playerData, setPlayerData] = useState(() => {
@@ -61,6 +63,7 @@ const [playerData, setPlayerData] = useState(() => {
     inventory: ['thing 1', 'thing 2', 'thing 3'],
     notes: ['note 1', 'note 2', 'note 3'],
     languages: ['language 1', 'language 2', 'language 3'],
+    note: ["note one", "Note two"],
   };
 });
 
@@ -82,6 +85,10 @@ const togglePopup = (field = null) => {
   setShowPopup(prev => !prev);
 };
 
+const togglePopupScroll = (field = null) => {
+  setCurrentlyEditing(field);
+  setShowPopupScroll(prev => !prev);
+};
 
   // Save to localStorage whenever playerData changes
   useEffect(() => {
@@ -114,6 +121,33 @@ const togglePopup = (field = null) => {
 />
  
 
+            <button
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={togglePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+{/* Pop Up Scroll ------------------------------ */}
+  {showPopup && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded shadow-lg w-[300px] text-center">
+            <h2 className="text-xl font-bold mb-4">Select value</h2>
+<select
+  value={playerData[currentlyEditing] || ''}
+  onChange={(e) =>
+    setPlayerData((prev) => ({ ...prev, [currentlyEditing]: e.target.value }))
+  }
+  className="bg-slate-200 rounded p-1"
+>
+  <option value="">Select an option</option>
+  {options.map((option, idx) => (
+    <option key={idx} value={option}>
+      {option}
+    </option>
+  ))}
+</select>
             <button
               className="mt-4 px-4 py-2 bg-red-500 text-white rounded" onClick={togglePopup}>
               Close
@@ -203,7 +237,7 @@ const togglePopup = (field = null) => {
     <p>Notes</p>
     <p>{playerData.notes[0]}</p>
   </div>
-  <button onClick={() => togglePopup()} className="bg-slate-100 p-1">change</button>
+  <button onClick={() => togglePopup('size')} className="bg-slate-100 p-1">change</button>
 </div>
 
 
