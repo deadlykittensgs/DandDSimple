@@ -2,25 +2,13 @@ import React  from 'react'
 import { useState, useEffect } from 'react'
 
 
-export default function App() {
+export default function Player2ex() {
 
 
-const [showPopup, setShowPopup] = useState(false); // for changing fields with custom values 
-const [showPopupScroll, setShowPopupScroll] = useState(false); // for changing fields with defined values 
-const [currentlyEditing, setCurrentlyEditing] = useState(null);  // for setting what is being edited in the pop up 
-// const [rolled, setRolled] = useState(null);
 const [lock, setLock] = useState(true)
-// const [count, setCount] = useState(0);
-
-// options for defined values 
-const classTypes = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Warlock','Wizard','Blood Hunter' ];
-
-
-
-
- // Player total data 
+const [count, setCount] = useState(0);
 const [playerData, setPlayerData] = useState(() => {
-  const saved = localStorage.getItem('playerData'); //Load saved data once on component mount
+  const saved = localStorage.getItem('playerData');
   return saved ? JSON.parse(saved) : {
     name: 'Default',
     lvl: 1,
@@ -73,94 +61,6 @@ const [playerData, setPlayerData] = useState(() => {
 });
 
 
-// Do I want everything defined here or do i want it all defined in the Json? 
-let skills = playerData.skills
-let classType = playerData.classType
-let lvl = playerData.lvl
-let background = playerData.background
-let dexTotal = playerData.dexTotal
-let dexTotalNumber = 0
-let conTotal = 0
-let conTotalNumber = 0
-let intTotal = 0
-let intTotalNumber = 0
-let wisTotal = playerData.wisTotal
-let wisTotalNumber = 0
-let charTotal = 0
-let chaTotal = 0;
-let chaTotalNumber = 0;
-let ac = 0;
-let initiative = 0;
-let speed = 0;
-let hpLeft = 0;
-let hp = 0;
-let deathSaves = 0;
-let roll = 0;
-let strTotal = 0;
-let profBonus = 0;
-let actions = 0;
-let toolProficiencie = 0;
-let languages = 0;
-let notes = 0;
-let listItems = 0;
-let name = 0;
-let race = 0;
-let itemList = 0;
-let savingThrows = 0
-
-   
-
-
-// Functions -----------------------------------
-
-
-// pop up to add details 
-const togglePopup = (field = null) => {
-  setCurrentlyEditing(field);
-  setShowPopup(prev => !prev);
-};
-// Pop up for defined data 
-const togglePopupScroll = (field = null) => {
-  setCurrentlyEditing(field);
-  setShowPopupScroll(prev => !prev);
-};
-
-
-// update player level  
-const changeLevel = (num) => {
-  setPlayerData((prev) => {
-    if (prev.lvl >= 20 && num === 1) {
-      return prev; // don't increase above 20
-    }
-    if (prev.lvl <= 1 && num === -1) {
-      return prev; // don't decrease below 1
-    }
-
-    return {
-      ...prev,
-      lvl: prev.lvl + num
-    };
-  });
-};
-
-
-
-
-
-
-
-  // Save to localStorage whenever playerData changes
-  useEffect(() => {
-    localStorage.setItem('playerData', JSON.stringify(playerData));
-  }, [playerData]);
-
-
-
-
-
-
-// --------
-
 
 function incrementFirstNumber(arr, place, times) {
 
@@ -188,15 +88,16 @@ function savingThrowEdit(arr, place, value) {
   setPlayerData({...playerData, place: arr  })
   // Return the modified array
   console.log(playerData)
-  // saveChanges()
+  saveChanges()
   // {incrementFirstNumber(savingThrows, 0, 1)}} 
 }
 
   return (
-    <div className='flex bg-slate-200/60 w-full h-fit'> 
+    <div className='flex bg-slate-200/60 w-[90%] h-fit'> 
 
 
-    // {/* Pop Up ------------------------------ */}
+{/* 
+// {/* Pop Up ------------------------------ */}
 //   {showPopup && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded shadow-lg w-[300px] text-center">
@@ -242,34 +143,35 @@ function savingThrowEdit(arr, place, value) {
             </button>
           </div>
         </div>
-      )}
+      )} 
 
-{/* player name  */}
+
+{/* Main -------  */}
 <div className='flex flex-col w-full'>
  <div className='flex justify-between items-center text-center bg-white w-full h-[50px] p-3'>
-   <button onClick={ () => {togglePopup("name")}} className='bg-slate-300 p-1 rounded'>Name</button> <h1 className='text-[1.3rem] italic ' >{playerData.name}</h1> <button className='bg-slate-300 p-1 rounded' onClick={() => {togglePopup("name")}}>Edit</button>
+   <button onClick={ () => {saveChanges()}} className='bg-slate-300 p-1 rounded'>Save</button> <h1 className='text-[1.3rem] italic ' >{name}</h1> <button className='bg-slate-300 p-1 rounded' onClick={() => {setEditMe(!editMe)}}>Edit</button>
  </div>
 
-{/* class and race info  */}
         <div className='bg-slate-200 w-full flex flex-col px-2 py-2'>
             <div className='flex'>
-       <div className='flex flex-col flex-1'><div className='flex justify-between pr-4'>{classType} <button onClick={ () => togglePopupScroll("classType")} className='bg-blue-300 p-1 text-[7px] rounded-full'>e</button></div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Class</div> <div><div className='flex justify-between pr-4'>{playerData.race} <button onClick={ () => togglePopupScroll("race")} className='bg-blue-300 p-1 text-[7px] rounded-full'>e</button></div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Race</div></div> </div>
-       <div className=' flex flex-col flex-1' > <div className='flex justify-between pr-4'>{lvl} <div><button onClick={ () => changeLevel(1)} className='bg-red-300'>up</button><button onClick={() => changeLevel(-1)} className='bg-green-300'>down</button></div></div><div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>lvl</div> <div><div className='flex-1'>{playerData.size}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Size</div></div> </div>
-       <div className='flex flex-col flex-1'> <div className='flex-1'>{background}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>Background</div> <div><div className='flex-1'>{playerData.alignment}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Alignment</div></div> </div>
+       <div className='flex flex-col flex-1'><div className='flex-1'>{classType}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Class</div> <div><div className='flex-1'>{race}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Race</div></div> </div>
+       <div className=' flex flex-col flex-1' > <div className='flex-1'>{lvl}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>lvl</div> <div><div className='flex-1'>{size}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Size</div></div> </div>
+       <div className='flex flex-col flex-1'> <div className='flex-1'>{background}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>Background</div> <div><div className='flex-1'>{alignment}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Alignment</div></div> </div>
             </div>
+            
     </div>
 
+{/* next  */}
 
-
- {/* stats info  */}
+     {/* box 2 */}
      <div className='bg-sky-300/80 min-h-[170px] w-full flex flex-col ' >
       
       <div className='flex justify-evenly items-center flex-1'>
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
-        <div className='font-bold text-[.7rem]' >Strength</div>
-        <div onClick={() => {rollTheDice(playerData.strTotal)}} className=' h-[24px]  bg-sky-200' >{playerData.strTotal}</div>
-        <div className='bg-sky-500 rounded-full'>{playerData.strTotalNumber}</div>
+        <div className='font-bold text-[.7rem]' >{playerData.strTotal} </div>
+        <div onClick={() => {rollTheDice(strTotal)}} className=' h-[24px]  bg-sky-200' >{strTotal}</div>
+        <div className='bg-sky-500 rounded-full'>{strTotalNumber}</div>
       </div>
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
@@ -344,7 +246,7 @@ function savingThrowEdit(arr, place, value) {
     <button onClick={() => {rollTheDice(6)}}>d6</button>
     <button onClick={() => {rollTheDice(8)}}>d8</button>
    </div>
-    <div className='bg-gradient-to-r from-slate-500 to-slate-800 border border-black border-2 font-bold rounded-full h-[60px] w-[60px] flex justify-center items-center text-white'>{playerData.roll}</div>
+    <div className='bg-gradient-to-r from-slate-500 to-slate-800 border border-black border-2 font-bold rounded-full h-[60px] w-[60px] flex justify-center items-center text-white'>{roll}</div>
    <div  className='flex flex-1 justify-evenly' >
    <button onClick={() => {rollTheDice(10)}}>d10</button>
     <button onClick={() => {rollTheDice(12)}}>d12</button>
@@ -355,11 +257,11 @@ function savingThrowEdit(arr, place, value) {
 <div className='justify-center flex  flex-col bg-sky-200/80'>
 <div className='flex bg-slate-400 justify-center'><h3>Actions</h3></div>
 <div className='flex flex-col h-fit'>
-{/* <div>
-      {playerData.actions.map((item) => (
+<div>
+      {actions.map((item) => (
         <ListItem playerData={playerData} id={item.id} key={item.action} name={item.action} description={item.description} />
       ))}
-    </div> */}
+    </div>
 
       </div>
 </div>
@@ -411,14 +313,14 @@ function savingThrowEdit(arr, place, value) {
 
 <div className='flex bg-slate-400 justify-center'><h3>Tool Proficiencies</h3></div>
 <div>
-{/* <div>
+<div>
         {toolProficiencie.map((item, index) => (
           <ListItem key={index} description={item}></ListItem>
         ))}
       </div>
       <button onClick={() => {console.log(Item)}}> edit </button>
 
-</div> */}
+</div>
 
 <div>
 <div className='flex bg-slate-400 justify-center'><h3>Abilities</h3></div>
@@ -431,30 +333,30 @@ function savingThrowEdit(arr, place, value) {
 
 <div className='justify-center flex  flex-col bg-sky-200/80'>
 <div className='flex bg-slate-400 justify-center'><h3>Inventory</h3></div>
-{/* <ul>
-        {playerData.inventory.map((item, index) => (
+<ul>
+        {inventory.map((item, index) => (
           <li key={(index + 1000)}>{item}</li>
         ))}
-      </ul> */}
+      </ul>
 </div>
 
 <div className='flex bg-slate-400 justify-center'><h3>Notes</h3></div>
 <div>
-{/* <ul>
+<ul>
         {notes.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
-      </ul> */}
+      </ul>
       <button onClick={() => {console.log(listItems)}}> edit </button>
 
 </div>
 <div className='flex bg-slate-400 justify-center'><h3>Languages</h3></div>
 <div>
-{/* <ul>
+<ul>
         {languages.map((item, index) => (
           <li key={index}>{item}</li>
         ))}
-      </ul> */}
+      </ul>
       <button onClick={() => {console.log(listItems)}}> edit </button>
 
 </div>
@@ -468,9 +370,6 @@ function savingThrowEdit(arr, place, value) {
 
 
 
-
-
-</div>
 
 
 </div>
