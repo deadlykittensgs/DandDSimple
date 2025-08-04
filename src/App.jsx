@@ -13,8 +13,12 @@ const [lock, setLock] = useState(true)
 // const [count, setCount] = useState(0);
 
 // options for defined values 
-const classTypes = ['Barbarian','Bard','Cleric','Druid','Fighter','Monk','Paladin','Ranger','Rogue','Sorcerer','Warlock','Wizard','Blood Hunter' ];
-
+    const classTypes = ["Barbarian","Bard","Cleric","Druid", "Fighter","Monk","Paladin","Ranger","Rogue","Sorcerer","Warlock","Wizard","Artificer", "Blood Hunter","-Other-"];
+    const levelOptions = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+    const racesOf = [ "Dragonborn","Dwarf","Elf","Gnome","Half-Elf", "Halfling", "Half-Orc","Human", "Tiefling", "Aarakocra","Genasi","Goliath","Aasimar","Bugbear","Firbolg","Goblin", "Hobgoblin", "Kenku", "Kobold", "Lizardfolk", "Orc", "Tabaxi","Triton","Yuan-ti Pureblood","Gith", "Eladrin", "Shadar-Kai", "Changeling", "Kalashtar","Orc of Eberron","Shifter","Warforged", "Centaur", "Minotaur", "Satyr","Triton of Theros","Pallid Elf", "Sea Elf", "Tortle","Dhampir", "Hexblood", "Reborn","Centaur of Ravnica","Loxodon","Simic Hybrid","Vedalken","Fairy","Harengon","Owlin","Verdan","Grung", "Automaton", "Eidolon", "Soulless", "Tiefling Variant", "Aetherborn","Khenra", "Naga", "Reborn"];
+    const danddsize =["Tiny","small","Medium","Large","Huge",]
+    const danddAlignment =["LG","NG","CG","LN","N","CN","LE","NE","CE"]    
+    const backgrounds = ["Acolyte", "Charlatan", "Criminal", "Entertainer", "Folk Hero", "Guild Artisan", "Hermit", "Noble", "Outlander", "Sage", "Sailor", "Soldier", "Urchin", "Cloistered Scholar", "Courtier", "Faction Agent", "Far Traveler", "Gladiator", "Haunted One", "Investigator", "Knight", "Mercenary Veteran", "Urban Bounty Hunter", "Pirate", "Smuggler", "Waterdhavian Noble", "Anthropologist", "Archaeologist", "City Watch", "Clan Crafter", "Uthgardt Tribe Member"];
 
 
 
@@ -250,15 +254,115 @@ function savingThrowEdit(arr, place, value) {
    <button onClick={ () => {togglePopup("name")}} className='bg-slate-300 p-1 rounded'>Name</button> <h1 className='text-[1.3rem] italic ' >{playerData.name}</h1> <button className='bg-slate-300 p-1 rounded' onClick={() => {togglePopup("name")}}>Edit</button>
  </div>
 
+
+
 {/* class and race info  */}
-        <div className='bg-slate-200 w-full flex flex-col px-2 py-2'>
-            <div className='flex'>
-       <div className='flex flex-col flex-1'><div className='flex justify-between pr-4'>{classType} <button onClick={ () => togglePopupScroll("classType")} className='bg-blue-300 p-1 text-[7px] rounded-full'>e</button></div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Class</div> <div><div className='flex justify-between pr-4'>{playerData.race} <button onClick={ () => togglePopupScroll("race")} className='bg-blue-300 p-1 text-[7px] rounded-full'>e</button></div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Race</div></div> </div>
-       <div className=' flex flex-col flex-1' > <div className='flex justify-between pr-4'>{lvl} <div><button onClick={ () => changeLevel(1)} className='bg-red-300'>up</button><button onClick={() => changeLevel(-1)} className='bg-green-300'>down</button></div></div><div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>lvl</div> <div><div className='flex-1'>{playerData.size}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Size</div></div> </div>
-       <div className='flex flex-col flex-1'> <div className='flex-1'>{background}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem] '>Background</div> <div><div className='flex-1'>{playerData.alignment}</div> <div className='flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]'>Alignment</div></div> </div>
-            </div>
+<div className="bg-slate-200 w-full flex flex-col px-2 py-2">
+  <div className="flex">
+    
+    {/* Left Column: Class & Race */}
+    <div className="flex flex-col flex-1">
+      <div className="flex justify-between pr-4">
+        {classType}
+        <button 
+          onClick={() => togglePopupScroll("classType")} 
+          className="bg-blue-300 p-1 text-[7px] rounded-full">
+          e
+        </button>
+      </div>
+      <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+        Class
+      </div>
+
+      <div>
+        <div className="flex justify-between pr-4">
+          {playerData.race}
+          <button 
+            onClick={() => togglePopupScroll("race")} 
+            className="bg-blue-300 p-1 text-[7px] rounded-full">
+            e
+          </button>
+        </div>
+        <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+          Race
+        </div>
+      </div>
     </div>
 
+    {/* Middle Column: Level & Size */}
+    <div className="flex flex-col flex-1">
+      <div className="flex justify-between pr-4">
+        {lvl}
+        <div>
+          <button 
+            onClick={() => changeLevel(1)} 
+            className="bg-red-300"
+          >
+            up
+          </button>
+          <button 
+            onClick={() => changeLevel(-1)} 
+            className="bg-green-300"
+          >
+            down
+          </button>
+        </div>
+      </div>
+      <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+        lvl
+      </div>
+
+      <div>
+        <div className="flex justify-between pr-4">
+          {playerData.size}
+          <button 
+            onClick={() => togglePopupScroll("sizeChoice")}  
+            className="bg-slate-400 p-1 text-[7px] rounded-full"
+          >
+            e
+          </button>
+        </div>
+        <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+          Size
+        </div>
+      </div>
+    </div>
+
+    {/* Right Column: Background & Alignment */}
+    <div className="flex flex-col flex-1">
+      <div>
+        <div className="flex justify-between pr-4">
+          {background}
+          <button 
+            onClick={() => togglePopupScroll("backgrounds")}  
+            className="bg-slate-400 p-1 text-[7px] rounded-full"
+          >
+            e
+          </button>
+        </div>
+        <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+          Background
+        </div>
+      </div>
+
+      <div>
+        <div className="flex justify-between pr-4">
+          {playerData.alignment}
+          <button 
+            onClick={() => togglePopupScroll("alignment")}  
+            className="bg-slate-400 p-1 text-[7px] rounded-full"
+          >
+            e
+          </button>
+        </div>
+        <div className="flex-1 border border-black border-l-transparent border-r-transparent border-b-transparent italic text-[.8rem]">
+          Alignment
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
  {/* stats info  */}
@@ -280,8 +384,8 @@ function savingThrowEdit(arr, place, value) {
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
         <div className='font-bold text-[.5rem]' >Constitution</div>
-        <div onClick={() => {rollTheDice(conTotal)}} className='h-[24px] bg-sky-200' >{conTotal}</div>
-        <div className='bg-sky-500 rounded-full'>{conTotalNumber}</div>
+        <div onClick={() => {rollTheDice(conTotal)}} className='h-[24px] bg-sky-200' >{playerData.conTotal}</div>
+        <div className='bg-sky-500 rounded-full'>{playerData.conTotalNumber}</div>
       </div>
       </div>
     
@@ -289,51 +393,51 @@ function savingThrowEdit(arr, place, value) {
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
         <div className='font-bold text-[.5rem]' >Intelligence</div>
-        <div onClick={() => {rollTheDice(intTotal)}} className=' h-[24px]  bg-sky-200' >{intTotal}</div>
-        <div className='bg-sky-500 rounded-full'>{intTotalNumber}</div>
+        <div onClick={() => {rollTheDice(intTotal)}} className=' h-[24px]  bg-sky-200' >{playerData.intTotal}</div>
+        <div className='bg-sky-500 rounded-full'>{playerData.intTotalNumber}</div>
       </div>
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
         <div className='font-bold text-[.7rem]' >Wisdom</div>
-        <div onClick={() => {rollTheDice(wisTotal)}} className=' h-[24px]  bg-sky-200' >{wisTotal}</div>
-        <div className='bg-sky-500 rounded-full'>{wisTotalNumber}</div>
+        <div onClick={() => {rollTheDice(playerData.wisTotal)}} className=' h-[24px]  bg-sky-200' >{playerData.wisTotal}</div>
+        <div className='bg-sky-500 rounded-full'>{playerData.wisTotalNumber}</div>
       </div>
     
       <div className='text-center bg-slate-200 h-fit w-[60px] rounded p-1'>
         <div className='font-bold text-[.7rem]' >Charisma</div>
-        <div onClick={() => {rollTheDice(chaTotal)}} className=' h-[24px]  bg-sky-200' >{chaTotal}</div>
-        <div className='bg-sky-500 rounded-full'>{chaTotalNumber}</div>
+        <div onClick={() => {rollTheDice(playerData.chaTotal)}} className=' h-[24px]  bg-sky-200' >{playerData.chaTotal}</div>
+        <div className='bg-sky-500 rounded-full'>{playerData.chaTotalNumber}</div>
       </div>
       </div>
 </div>
 {/* box 3  */}
 <div className='bg-slate-200 w-full h-[200px] flex flex-wrap justify-evenly items-center'>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center' >
-    <p>{ac}</p>
+    <p>{playerData.ac}</p>
     <p>Armor Class</p>
 </div>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center' >
-    <p>{initiative}</p>
+    <p>{playerData.initiative}</p>
     <p>Initiative</p>
 </div>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center' >
-    <p>{speed} ft</p>
+    <p>{playerData.speed}</p>
     <p>Speed</p>
 </div>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center' >
    <div className='flex'>
-     <p>{hpLeft}</p>
+     <p>{playerData.hpLeft}</p>
     <p>/</p>
-    <p>{hp}</p>
+    <p>{playerData.hp}</p>
     </div>
     <p>Hp</p>
 </div>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center rounded' >
-    <p>10</p>
+    <p>?</p>
     <p>Hit Dice</p>
 </div>
 <div className='bg-slate-400 flex flex-col h-[80px] w-[80px] justify-center items-center text-center' >
-    <p>{deathSaves}</p>
+    <p>{playerData.deathSaves}</p>
     <p>Death Saves</p>
 </div>
 </div>

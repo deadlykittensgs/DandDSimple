@@ -1,0 +1,6 @@
+Define the goal of this project here
+
+
+Gaol one, make a working D and D page that can be 
+run on a local machine and used to play d and d.
+No frills or bells and whisltles untill this is done

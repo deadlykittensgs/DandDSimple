@@ -24,6 +24,14 @@ Use the notes format do display notes and abbilities and such
 
 Basics 
 
+There really isnt much in here just pick one thing a day and fix it. 
+
+
+
+
+
+
+
 // import React, { useState, useEffect } from 'react';
 // import './App.css';
 
