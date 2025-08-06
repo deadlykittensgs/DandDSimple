@@ -78,6 +78,7 @@ const [playerData, setPlayerData] = useState(() => {
 
 
 // Do I want everything defined here or do i want it all defined in the Json? 
+// Work to put everything in a joson for easy editing or use a json to give all of this values 
 let skills = playerData.skills
 let classType = playerData.classType
 let lvl = playerData.lvl
@@ -253,7 +254,6 @@ function savingThrowEdit(arr, place, value) {
  <div className='flex justify-between items-center text-center bg-white w-full h-[50px] p-3'>
    <button onClick={ () => {togglePopup("name")}} className='bg-slate-300 p-1 rounded'>Name</button> <h1 className='text-[1.3rem] italic ' >{playerData.name}</h1> <button className='bg-slate-300 p-1 rounded' onClick={() => {togglePopup("name")}}>Edit</button>
  </div>
-
 
 
 {/* class and race info  */}
